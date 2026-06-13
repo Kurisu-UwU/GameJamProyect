@@ -66,11 +66,17 @@ void DibujarMenu()
 
 void DibujarNivel() {
 }
-void DibujarNaveGrande() {
+void DibujarNaveGrande(int x, int y) {
+    Posicion(x+2, y);   cout << "?????\\";
+    Posicion(x, y+1); cout << "??? ? ? ?>";
+    Posicion(x+2, y+2); cout << "?????/";
 }
-void DibujarPersonas() {
+void DibujarPersonas(int x, int y) {
+    Posicion(x , y);    cout << "Ö";
+    Posicion(x, y + 1); cout << "?";
 }
-void DibujarAsteroides() {
+void DibujarAsteroide(int x, int y) {
+    Posicion(x, y); cout << "@";
 }
 void AnimacionBorrar() {
     for (int i = 120; i > 0; i = i - 6) {
