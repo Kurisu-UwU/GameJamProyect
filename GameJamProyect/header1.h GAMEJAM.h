@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <conio.h>
 
 using namespace std;
@@ -10,6 +10,9 @@ int n2x = 40, n2y = 12;
 int n3x = 80, n3y = 22;
 int opMenu = 1;
 int opFinal = 0;
+int px = 100, py = 13;
+bool owo; // boleano para el movimiento del cohete
+int Asteroidesmatrix[10][2];
 
 void Posicion(int x, int y)
 {
@@ -66,17 +69,29 @@ void DibujarMenu()
 
 void DibujarNivel() {
 }
-void DibujarNaveGrande(int x, int y) {
-    Posicion(x+2, y);   cout << "?????\\";
-    Posicion(x, y+1); cout << "??? ? ? ?>";
-    Posicion(x+2, y+2); cout << "?????/";
+void DibujarNaveGrande1(int x, int y) {
+    Posicion(x+2, y);   cout << "=====\\";
+    Posicion(x, y+1); cout << "3=| | | ->";
+    Posicion(x+2, y+2); cout << "=====/";
+}
+void DibujarNaveGrande2(int x, int y) {
+    Posicion(x + 2, y);   cout << "/=====";
+    Posicion(x, y + 1); cout << "<-| | | =3";
+    Posicion(x + 2, y + 2); cout << "\\=====";
+}
+void BorrarNaveGrande(int x, int y) {
+    Posicion(x + 2, y);   cout << "       ";
+    Posicion(x, y + 1); cout << "          ";
+    Posicion(x + 2, y + 2); cout << "      ";
 }
 void DibujarPersonas(int x, int y) {
-    Posicion(x , y);    cout << "�";
-    Posicion(x, y + 1); cout << "?";
+    Posicion(x , y);    cout << "Ö";
+    Posicion(x, y + 1); cout << "▀";
 }
-void DibujarAsteroide(int x, int y) {
-    Posicion(x, y); cout << "@";
+void DibujarAsteroide(int x) { // asteroidesssssssssss
+    int x2 = Asteroidesmatrix[x][1];
+    int y2 = Asteroidesmatrix[x][2];
+    Posicion(x2, y2); cout << "@";
 }
 void AnimacionBorrar() {
     for (int i = 120; i > 0; i = i - 6) {
@@ -143,4 +158,37 @@ void DibujarCreditos(int x, int y) {
     Posicion(x, y+4); cout << "|      _||    __  ||    ___|| |_|   ||   |   |   |  |  |_|  ||_____  |";
     Posicion(x, y+5); cout << "|     |_ |   |  | ||   |___ |       ||   |   |   |  |       | _____| |";
     Posicion(x, y+6); cout << "|_______||___|  |_||_______||______| |___|   |___|  |_______||_______|";
+}
+void WASDmover(char teclacohete) {
+    if ((teclacohete == 'w' || teclacohete == 'W') && (py > 1)) {
+        py--;
+    }
+    if ((teclacohete == 's' || teclacohete == 'S') && (py < 27)) {
+        py++;
+    }
+    if ((teclacohete == 'a' || teclacohete == 'A') && (px > 0)) {
+        px -= 1;
+    }
+    if ((teclacohete == 'd' || teclacohete == 'D') && (px < 110)) {
+        px += 1;
+    }
+}
+void Protagonistamover() {
+    if (_kbhit()) {
+        BorrarNaveGrande(px, py);
+        char tecla2 = _getch();
+        WASDmover(tecla2);
+        if (tecla2 == 'd' || tecla2 == 'D') owo = true;
+        if (tecla2 == 'a' || tecla2 == 'a') owo = false;
+    }
+    if (owo) {
+        DibujarNaveGrande1(px, py);
+    }
+    else {
+        DibujarNaveGrande2(px, py);
+    }
+}
+void AsteroideConvertor(int x, int y) {
+}
+void AsteroidesMov() {
 }
