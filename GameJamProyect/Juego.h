@@ -4,12 +4,14 @@ void Tutorial() {
 
 }
 void IniciarJuego() {
+	PaneldeControl();
 	DibujarNaveGrande2(px, py);
 	do {
-		DibujarMediaLuna(112, 12);
-		DibujarMediaTierra(0, 8);
+		DibujarMediaLuna(112, 10);
+		DibujarMediaTierra(0, 6);
 		Protagonistamover();
 		AsteroidesMov();
+		AnimacionPanel();
 		_sleep(1);
 	} while (1);
 }

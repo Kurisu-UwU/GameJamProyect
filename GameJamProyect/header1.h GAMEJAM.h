@@ -10,20 +10,29 @@ int n2x = 40, n2y = 12;
 int n3x = 80, n3y = 22;
 int opMenu = 1;
 int opFinal = 0;
-int px = 100, py = 13;
+int px = 100, py = 11;
 bool owo; // boleano para el movimiento del cohete
 int Asteroidesmatrix[10][2];
+int animacionpanel = 0, panel2= 0;
 
-void Posicion(int x, int y)
-{
-    Console::SetCursorPosition(x, y);
-}
+void Posicion(int x, int y){Console::SetCursorPosition(x, y);}
+void ColorBlanco()         {Console::ForegroundColor = ConsoleColor::White;}
+void ColorAmarillo()       {Console::ForegroundColor = ConsoleColor::Yellow;}
+void ColorVerde()          {Console::ForegroundColor = ConsoleColor::Green;}
+void ColorRojo()           {Console::ForegroundColor = ConsoleColor::Red;}
+void ColorNaranja()        {Console::ForegroundColor = ConsoleColor::DarkYellow;}
+void ColorAzul()           {Console::ForegroundColor = ConsoleColor::Blue;}
+void ColorNegro()          {Console::ForegroundColor = ConsoleColor::Black;}
+void ColorMorado()         {Console::ForegroundColor = ConsoleColor::Magenta;}
 
-void ColorBlanco()
-{
-    Console::ForegroundColor = ConsoleColor::White;
-}
-void ColorAmarillo() { Console::ForegroundColor = ConsoleColor::Yellow; }
+void BColorRojo()    {Console::BackgroundColor = ConsoleColor::Red;}
+void BColorAzul()    {Console::BackgroundColor = ConsoleColor::Blue;}
+void BColorGris()    {Console::BackgroundColor = ConsoleColor::Gray;}
+void BColorNegro()   {Console::BackgroundColor = ConsoleColor::Black;}
+void BColorVerde()   {Console::BackgroundColor = ConsoleColor::Green;}
+void BColorAmarillo(){Console::BackgroundColor = ConsoleColor::Yellow;}
+void BColorCafe()    {Console::BackgroundColor = ConsoleColor::DarkYellow;}
+void BColorMorado()  {Console::BackgroundColor = ConsoleColor::Magenta;}
 
 void DibujarFondo()
 {
@@ -65,12 +74,12 @@ void DibujarNivel() {
 }
 void DibujarNaveGrande1(int x, int y) {
     Posicion(x+2, y);   cout << "=====\\";
-    Posicion(x, y+1); cout << "3=| | | ->";
+    Posicion(x, y + 1); ColorRojo(); cout << "3"; Posicion(x + 1, y + 1); ColorNaranja(); cout << "="; Posicion(x + 2, y + 1); ColorBlanco(); cout << "| | | ->"; 
     Posicion(x+2, y+2); cout << "=====/";
 }
 void DibujarNaveGrande2(int x, int y) {
     Posicion(x + 2, y);   cout << "/=====";
-    Posicion(x, y + 1); cout << "<-| | | =3";
+    Posicion(x, y + 1); cout << "<-| | | "; Posicion(x + 8, y + 1); ColorNaranja(); cout << "="; Posicion(x+9, y + 1); ColorRojo(); cout << "3"; ColorBlanco();
     Posicion(x + 2, y + 2); cout << "\\=====";
 }
 void BorrarNaveGrande(int x, int y) {
@@ -166,18 +175,10 @@ void Ancho(int x, int y, int n) {
     }
 }
 void WASDmover(char teclacohete) {
-    if ((teclacohete == 'w' || teclacohete == 'W') && (py > 1)) {
-        py--;
-    }
-    if ((teclacohete == 's' || teclacohete == 'S') && (py < 27)) {
-        py++;
-    }
-    if ((teclacohete == 'a' || teclacohete == 'A') && (px > 0)) {
-        px -= 1;
-    }
-    if ((teclacohete == 'd' || teclacohete == 'D') && (px < 110)) {
-        px += 1;
-    }
+    if ((teclacohete == 'w' || teclacohete == 'W') && (py > 1)) {py--;}
+    if ((teclacohete == 's' || teclacohete == 'S') && (py < 23)) {py++;}
+    if ((teclacohete == 'a' || teclacohete == 'A') && (px > 0)) { px -= 1;}
+    if ((teclacohete == 'd' || teclacohete == 'D') && (px < 110)) {px += 1;}
 }
 void Protagonistamover() {
     if (_kbhit()) {
@@ -185,16 +186,46 @@ void Protagonistamover() {
         char tecla2 = _getch();
         WASDmover(tecla2);
         if (tecla2 == 'd' || tecla2 == 'D') owo = true;
-        if (tecla2 == 'a' || tecla2 == 'a') owo = false;
+        if (tecla2 == 'a' || tecla2 == 'A') owo = false;
     }
     if (owo) {
         DibujarNaveGrande1(px, py);
     }
-    else {
+    if (owo == false) {
         DibujarNaveGrande2(px, py);
     }
 }
 void AsteroideConvertor(int x, int y) {
 }
 void AsteroidesMov() {
+}
+void ImprimirCorazon(int x, int y) {
+    Posicion(x, y); BColorRojo(); cout << "  ";
+    Posicion(x + 4, y); cout << "  ";
+    Posicion(x, y + 1); cout << "      ";
+    Posicion(x + 2, y + 2); cout << "  "; BColorNegro();
+}
+void PaneldeControl(){
+   
+    ColorVerde();Posicion(0, 26); cout << "========================================================================================================================";
+    ImprimirCorazon(1,27);ImprimirCorazon(8, 27);ImprimirCorazon(15, 27);
+    ColorRojo();Posicion(22, 28); cout << "Vidas";
+    ColorAzul();Posicion(33, 28); cout << "WASD";
+    ColorVerde();Posicion(44, 28); cout << "Tiempo:";
+    ColorAmarillo();Posicion(60, 28); cout << "Velocidad:";
+    ColorVerde();Posicion(80, 28); cout << "Personas rescatadas:";
+    ColorMorado();Posicion(110, 28); cout << "Nave ORION";
+}
+void AnimacionPanel() {
+    if (animacionpanel == 2) {
+        ColorVerde();Posicion(panel2, 26); cout << "= ";
+        BColorRojo(); Posicion(panel2 + 1, 26); cout << "  "; BColorNegro();
+        panel2++; animacionpanel = 0;
+    }
+    else {animacionpanel++;}
+    if (panel2 == 118) {
+        ColorVerde();Posicion(118, 26); cout << "==";
+        panel2 = 0;
+    }
+    ColorBlanco();
 }
