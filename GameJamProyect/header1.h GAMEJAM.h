@@ -35,11 +35,7 @@ void DibujarFondo()
     Posicion(85, 20); cout <<  "*";
     Posicion(15, 25); cout <<  "*";
     Posicion(105, 15); cout << "*";
-
-    
-
 }
-
 void DibujarLuna()
 {
     ColorBlanco();
@@ -50,7 +46,6 @@ void DibujarLuna()
     Posicion(50, 7);  cout << "  `:::::::::'  ";
     Posicion(50, 8);  cout << "    `'---'`    ";
 }
-
 void DibujarMenu()
 {
     ColorBlanco();
@@ -66,7 +61,6 @@ void DibujarMenu()
     Posicion(49, 22);
     if (opMenu == 4) cout << ">> 4. Salir      "; else cout << "   4. Salir      ";
 }
-
 void DibujarNivel() {
 }
 void DibujarNaveGrande1(int x, int y) {
@@ -170,7 +164,6 @@ void Ancho(int x, int y, int n) {
         x += 2;
         Posicion(x, y); cout << "*";
     }
-}
 }
 void WASDmover(char teclacohete) {
     if ((teclacohete == 'w' || teclacohete == 'W') && (py > 1)) {
