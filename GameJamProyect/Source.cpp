@@ -8,6 +8,7 @@ int main()
     bool enCarga2 = true;
     bool Menucondicioncreditos = true;
     do {
+        srand(time(0));
         do //para mantener el menu en pantalla
         {
             enCarga = true;

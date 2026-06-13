@@ -14,6 +14,12 @@ int px = 100, py = 11;
 bool owo; // boleano para el movimiento del cohete
 int Asteroidesmatrix[10][2];
 int animacionpanel = 0, panel2= 0;
+//asteroides
+int veloA = 4; //velocidad base
+int ayx = 27, ayx2 = 10; //coordenadas y aumentos en base x
+int ay1 = 0, ay2 = 0, ay3 = 0, ay4 = 0, ay5 = 0, ay6 = 0, ay7 = 0, ay8 = 0; //Coordenadas en tiempo real en base y
+int av1 = veloA, av2= veloA+1, av3= veloA+2, av4= veloA+1, av5= veloA+2, av6= veloA, av7= veloA+2, av8= veloA+1; //Velocidades
+int at1 = 0, at2 = 0, at3 = 0, at4 = 0, at5 = 0, at6 = 0, at7 = 0, at8 = 0; //tiempo de espera
 
 void Posicion(int x, int y){Console::SetCursorPosition(x, y);}
 void ColorBlanco()         {Console::ForegroundColor = ConsoleColor::White;}
@@ -90,11 +96,6 @@ void BorrarNaveGrande(int x, int y) {
 void DibujarPersonas(int x, int y) {
     Posicion(x , y);    cout << "Ö";
     Posicion(x, y + 1); cout << "▀";
-}
-void DibujarAsteroide(int x) { // asteroidesssssssssss
-    int x2 = Asteroidesmatrix[x][1];
-    int y2 = Asteroidesmatrix[x][2];
-    Posicion(x2, y2); cout << "@";
 }
 void AnimacionBorrar() {
     for (int i = 120; i > 0; i = i - 6) {
@@ -174,13 +175,13 @@ void Ancho(int x, int y, int n) {
         Posicion(x, y); cout << "*";
     }
 }
-void WASDmover(char teclacohete) {
+void WASDmover(char teclacohete) { //un movimiento W A S D
     if ((teclacohete == 'w' || teclacohete == 'W') && (py > 1)) {py--;}
     if ((teclacohete == 's' || teclacohete == 'S') && (py < 23)) {py++;}
     if ((teclacohete == 'a' || teclacohete == 'A') && (px > 0)) { px -= 1;}
     if ((teclacohete == 'd' || teclacohete == 'D') && (px < 110)) {px += 1;}
 }
-void Protagonistamover() {
+void Protagonistamover() {  //movimiento del cohete (lo copié de nuestro proyecto xd)
     if (_kbhit()) {
         BorrarNaveGrande(px, py);
         char tecla2 = _getch();
@@ -195,18 +196,42 @@ void Protagonistamover() {
         DibujarNaveGrande2(px, py);
     }
 }
-void AsteroideConvertor(int x, int y) {
+void DibujarAsteroide(int x, int y) { // asteroidesssssssssss
+    Posicion(x, y); cout << "@";
 }
-void AsteroidesMov() {
+void BorrarAsteroide(int x, int y) { // asteroidesssssssssss
+    Posicion(x, y); cout << " ";
 }
-void ImprimirCorazon(int x, int y) {
+void AsteroidesMov() {  //IMPORTANTE
+    ColorMorado();
+    if (ay1 >= 24) { BorrarAsteroide(ayx, ay1);            ay1 = 0; av1 = rand() % 4 + veloA; at1 = 0; }  //ay1..ay2.. etc, son las variables de la posición en tiempo real de los asteroides, cada uno anotado individualmente
+    if (ay2 >= 24) { BorrarAsteroide(ayx + ayx2, ay2);     ay2 = 0; av2 = rand() % 4 + veloA; at2 = 0; }
+    if (ay3 >= 24) { BorrarAsteroide(ayx + ayx2 * 2, ay3); ay3 = 0; av3 = rand() % 4 + veloA; at3 = 0; }  //av1...av2..etc, variables para generar números aleatorios para la velocidad aleatoria
+    if (ay4 >= 24) { BorrarAsteroide(ayx + ayx2 * 3, ay4); ay4 = 0; av4 = rand() % 4 + veloA; at4 = 0; }  //VeloA es solo una variable sumatoria
+    if (ay5 >= 24) { BorrarAsteroide(ayx + ayx2 * 4, ay5); ay5 = 0; av5 = rand() % 4 + veloA; at5 = 0; }  //at1..at2.. son la cantidad de "ticks" o "clocks" o las veces que tiene que cargar para avanzar 1 paso por asteroides, por ejemplo si at2 es 8, tendrá que cargar la secuencia repetitiva 8 veces para que pueda avanzar 1 paso
+    if (ay6 >= 24) { BorrarAsteroide(ayx + ayx2 * 5, ay6); ay6 = 0; av6 = rand() % 4 + veloA; at6 = 0; }   //ayx es la coordenada orizontal general de todas, todas empiezan con 27 y son sumadas de 10 en 10
+    if (ay7 >= 24) { BorrarAsteroide(ayx + ayx2 * 6, ay7); ay7 = 0; av7 = rand() % 4 + veloA; at7 = 0; }    //
+    if (ay8 >= 24) { BorrarAsteroide(ayx + ayx2 * 7, ay8); ay8 = 0; av8 = rand() % 4 + veloA; at8 = 0; }
+
+    if (at1 >= av1) { BorrarAsteroide(ayx, ay1);            ay1++; DibujarAsteroide(ayx, ay1);            at1=0; }  //esta locura
+    if (at2 >= av2) { BorrarAsteroide(ayx + ayx2, ay2);     ay2++; DibujarAsteroide(ayx + ayx2, ay2);     at2=0; }
+    if (at3 >= av3) { BorrarAsteroide(ayx + ayx2 * 2, ay3); ay3++; DibujarAsteroide(ayx + ayx2 * 2, ay3); at3=0; }
+    if (at4 >= av4) { BorrarAsteroide(ayx + ayx2 * 3, ay4); ay4++; DibujarAsteroide(ayx + ayx2 * 3, ay4); at4=0; }
+    if (at5 >= av5) { BorrarAsteroide(ayx + ayx2 * 4, ay5); ay5++; DibujarAsteroide(ayx + ayx2 * 4, ay5); at5=0; }
+    if (at6 >= av6) { BorrarAsteroide(ayx + ayx2 * 5, ay6); ay6++; DibujarAsteroide(ayx + ayx2 * 5, ay6); at6=0; }
+    if (at7 >= av7) { BorrarAsteroide(ayx + ayx2 * 6, ay7); ay7++; DibujarAsteroide(ayx + ayx2 * 6, ay7); at7=0; }
+    if (at8 >= av8) { BorrarAsteroide(ayx + ayx2 * 7, ay8); ay8++; DibujarAsteroide(ayx + ayx2 * 7, ay8); at8=0; }
+    at1++; at2++; at3++; at4++; at5++; at6++; at7++; at8++;
+
+}
+void ImprimirCorazon(int x, int y) {    // un corazoncito uwu
     Posicion(x, y); BColorRojo(); cout << "  ";
     Posicion(x + 4, y); cout << "  ";
     Posicion(x, y + 1); cout << "      ";
     Posicion(x + 2, y + 2); cout << "  "; BColorNegro();
 }
 void PaneldeControl(){
-   
+                                                                    //quité la secuencia repetitiva por que por alguna razón que no supe el por que pues dejó de funcionar, me dió weba asiq lo imprimí :VVVV
     ColorVerde();Posicion(0, 26); cout << "========================================================================================================================";
     ImprimirCorazon(1,27);ImprimirCorazon(8, 27);ImprimirCorazon(15, 27);
     ColorRojo();Posicion(22, 28); cout << "Vidas";
@@ -216,7 +241,7 @@ void PaneldeControl(){
     ColorVerde();Posicion(80, 28); cout << "Personas rescatadas:";
     ColorMorado();Posicion(110, 28); cout << "Nave ORION";
 }
-void AnimacionPanel() {
+void AnimacionPanel() {   // Una animación para el panel pq lo sentí muy apagado
     if (animacionpanel == 2) {
         ColorVerde();Posicion(panel2, 26); cout << "= ";
         BColorRojo(); Posicion(panel2 + 1, 26); cout << "  "; BColorNegro();
