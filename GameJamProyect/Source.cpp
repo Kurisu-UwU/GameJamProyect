@@ -7,7 +7,6 @@ int main()
     Console::Clear();
     bool enCarga2 = true;
     bool Menucondicioncreditos = true;
-    DibujarFondo();
     do {
         do //para mantener el menu en pantalla
         {
@@ -16,6 +15,7 @@ int main()
 
             DibujarLuna();
             DibujarMenu();
+            DibujarFondo();
 
             DibujarNaves();
 
@@ -39,7 +39,6 @@ int main()
                     enCarga = false;
                 }
             }
-            _sleep(50);
         } while (enCarga);
         switch (opFinal) {
         case 1:
@@ -47,8 +46,10 @@ int main()
             break;
         case 2:
             IniciarTutorial();
+            break;
         case 3: 
             IniciarCreditos();
+            break;
         case 4:
             enCarga2 = false;
         }

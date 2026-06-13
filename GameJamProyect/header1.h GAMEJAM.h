@@ -20,19 +20,20 @@ void ColorBlanco()
 {
     Console::ForegroundColor = ConsoleColor::White;
 }
+void ColorAmarillo() { Console::ForegroundColor = ConsoleColor::Yellow; }
 
 void DibujarFondo()
 {
     ColorBlanco();
-    Posicion(10, 3); cout << "*";
-    Posicion(30, 8); cout << "*";
-    Posicion(90, 4); cout << "*";
-    Posicion(20, 18); cout << "*";
-    Posicion(85, 20); cout << "*";
-    Posicion(15, 25); cout << "*";
+    Posicion(10, 3); cout <<   "*";
+    Posicion(30, 8); cout <<   "*";
+    Posicion(90, 4); cout <<   "*";
+    Posicion(20, 18); cout <<  "*";
+    Posicion(85, 20); cout <<  "*";
+    Posicion(15, 25); cout <<  "*";
     Posicion(105, 15); cout << "*";
 
-    Posicion(44, 11); cout << "|   [NOMBRE DEL JUEGO]  |";
+    Posicion(43, 11); cout << "|  [Atermis II Expedition]  |";
 
 }
 
@@ -72,9 +73,9 @@ void DibujarPersonas() {
 void DibujarAsteroides() {
 }
 void AnimacionBorrar() {
-    for (int i = 120; i > 0; i = i - 4) {
+    for (int i = 120; i > 0; i = i - 6) {
         for (int j = 0; j < 29; j++) {
-            Posicion(i - 4, j); cout << "|    ";
+            Posicion(i - 6, j); cout << "|      ";
 
         }
         _sleep(1);
@@ -126,4 +127,14 @@ void DibujarNaves() {
     Posicion(n1x, n1y); cout << ">=>";
     Posicion(n2x, n2y); cout << ">=>";
     Posicion(n3x, n3y); cout << ">=>";
+    _sleep(50);
+}
+void DibujarCreditos(int x, int y) {
+    Posicion(x, y);   cout << " _______  ______    _______  ______   ___   _______  _______  _______";
+    Posicion(x, y+1); cout << "|       ||    _ |  |       ||      | |   | |       ||       ||       |";
+    Posicion(x, y+2); cout << "|       ||   | ||  |    ___||  _    ||   | |_     _||   _   ||  _____|";
+    Posicion(x, y+3); cout << "|       ||   |_||_ |   |___ | | |   ||   |   |   |  |  | |  || |_____ ";
+    Posicion(x, y+4); cout << "|      _||    __  ||    ___|| |_|   ||   |   |   |  |  |_|  ||_____  |";
+    Posicion(x, y+5); cout << "|     |_ |   |  | ||   |___ |       ||   |   |   |  |       | _____| |";
+    Posicion(x, y+6); cout << "|_______||___|  |_||_______||______| |___|   |___|  |_______||_______|";
 }

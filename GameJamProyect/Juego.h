@@ -9,8 +9,24 @@ void IniciarJuego() {
 void IniciarTutorial() {
 
 }
-
 void IniciarCreditos() {
-	BorrarYMovernaves();
-	DibujarNaves();
+    bool uwu = true;
+	do {
+		BorrarYMovernaves();
+		DibujarFondo();
+		DibujarCreditos(24,2);
+		Posicion(24, 20); cout << "Creditos etc etc";
+		ColorAmarillo(); Posicion(24, 27); cout << "Pulse Z para salir"; ColorBlanco();
+		DibujarNaves();
+		ColorAmarillo();
+        if (kbhit())
+        {
+            char tecla = getch();
+            if (tecla == 'z' || tecla == 'Z' || tecla == 13)
+            {
+				uwu = false;
+            }
+        }
+	} while (uwu);
+	AnimacionBorrar();
 }
