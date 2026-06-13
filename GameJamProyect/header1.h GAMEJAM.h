@@ -36,7 +36,7 @@ void DibujarFondo()
     Posicion(15, 25); cout <<  "*";
     Posicion(105, 15); cout << "*";
 
-    Posicion(43, 11); cout << "|  [Atermis II Expedition]  |";
+    
 
 }
 
@@ -158,6 +158,19 @@ void DibujarCreditos(int x, int y) {
     Posicion(x, y+4); cout << "|      _||    __  ||    ___|| |_|   ||   |   |   |  |  |_|  ||_____  |";
     Posicion(x, y+5); cout << "|     |_ |   |  | ||   |___ |       ||   |   |   |  |       | _____| |";
     Posicion(x, y+6); cout << "|_______||___|  |_||_______||______| |___|   |___|  |_______||_______|";
+}
+void Alto(int x, int y, int n) {
+    for (int i = 0; i < n; i++) {
+        y++;
+        Posicion(x, y); cout << "*";
+    }
+}
+void Ancho(int x, int y, int n) {
+    for (int i = 0; i < n; i++) {
+        x += 2;
+        Posicion(x, y); cout << "*";
+    }
+}
 }
 void WASDmover(char teclacohete) {
     if ((teclacohete == 'w' || teclacohete == 'W') && (py > 1)) {
