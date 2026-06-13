@@ -16,6 +16,7 @@ int main()
             DibujarLuna();
             DibujarMenu();
             DibujarFondo();
+            Posicion(43, 11); cout << "|  [Atermis II Expedition]  |";
 
             DibujarNaves();
 
