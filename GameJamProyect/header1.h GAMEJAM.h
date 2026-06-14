@@ -22,6 +22,7 @@ int av1 = veloA, av2= veloA+1, av3= veloA+2, av4= veloA+1, av5= veloA+2, av6= ve
 int at1 = 0, at2 = 0, at3 = 0, at4 = 0, at5 = 0, at6 = 0, at7 = 0, at8 = 0; //tiempo de espera
 //Personas
 int personasEnT = 12, personasEnL = 0, personasEnNoC = 0; //personas en tierra, personas en luna, personas en nave o cohete
+int vidas = 3;
 
 void Posicion(int x, int y){Console::SetCursorPosition(x, y);}
 
@@ -253,6 +254,29 @@ void AnimacionVelocidad(bool x) {
     Posicion(70, 28); cout << velCohete << " km/h";
     if (avcx > 0) avcx--;
 }
+void ImprimirVidas() {
+    Posicion(1, 27); cout << "      ";
+    Posicion(1, 28); cout << "      ";
+    Posicion(1, 29); cout << "      ";
+
+    Posicion(8, 27); cout << "      ";
+    Posicion(8, 28); cout << "      ";
+    Posicion(8, 29); cout << "      ";
+
+    Posicion(15, 27); cout << "      ";
+    Posicion(15, 28); cout << "      ";
+    Posicion(15, 29); cout << "      ";
+
+    if (vidas == 1) {
+        ImprimirCorazon(1, 27);
+    }
+    if (vidas == 2) {
+        ImprimirCorazon(1, 27); ImprimirCorazon(8, 27);
+    }
+    if (vidas == 3) {
+        ImprimirCorazon(1, 27); ImprimirCorazon(8, 27); ImprimirCorazon(15, 27);
+    }
+}
 void PaneldeControl(){                                         //quité la secuencia repetitiva por que por alguna razón que no supe el por que pues dejó de funcionar, me dió weba asiq lo imprimí :VVVV                                  
     ColorVerde();Posicion(0, 26); cout << "========================================================================================================================";
     ImprimirCorazon(1,27);ImprimirCorazon(8, 27);ImprimirCorazon(15, 27);
@@ -262,6 +286,7 @@ void PaneldeControl(){                                         //quité la secue
     ColorAmarillo();Posicion(59, 28); cout << "Velocidad:";
     ColorVerde();Posicion(82, 28); cout << "Personas rescatadas:";
     ColorMorado();Posicion(110, 28); cout << "Nave ORION";
+    ImprimirVidas();
 }
 void AnimacionPanel() {   // Una animación para el panel pq lo sentí muy apagado
     if (animacionpanel == 2) {
@@ -283,14 +308,22 @@ void ColisionAparecerIzquierda() {
     py = 11; if (coheteIzqoDer) px = 105; else px = 10;
 }
 void colision() {  // colisiones Deivid
-    if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py)                       ColisionAparecerIzquierda();
-    if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py)         ColisionAparecerIzquierda();
-    if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) ColisionAparecerIzquierda();
-    if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) ColisionAparecerIzquierda();
-    if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) ColisionAparecerIzquierda();
-    if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) ColisionAparecerIzquierda();
-    if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) ColisionAparecerIzquierda();
-    if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) ColisionAparecerIzquierda();
+    if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py) { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
+    if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py)         { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
+    if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
+    if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
+    if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
+    if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
+    if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
+    if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) { ColisionAparecerIzquierda(); vidas--; ImprimirVidas();
+    }
 }
 void RescatarPersonas() {
 
