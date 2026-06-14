@@ -21,6 +21,7 @@ void IniciarJuego() {
 		if (tiempoRestante == 90) velCohete = 2;
 		if (tiempoRestante == 60) velCohete = 3;
 		if (tiempoRestante == 30) velCohete = 4;
+		PoscicionCoheteIzqoDer();
 		VelocidadCohete();
 		_sleep(1);
 		colision();

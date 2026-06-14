@@ -8,11 +8,12 @@ using namespace System;
 // variables en general para el menu y las naves
 int n1x = 0, n2x = 40, n3x = 80, n1y = 5, n2y = 12, n3y = 22;
 int opMenu = 1, opFinal = 0;
-int px = 100, py = 11;
+int px = 100, py = 11;  //coordenadas de la nave
 bool owo; // boleano para el movimiento del cohete
 int velCohete = 1;
 int Asteroidesmatrix[10][2];
 int animacionpanel = 0, panel2= 0;
+bool coheteIzqoDer = true; // boleano para determinar donde aparecerá el cohete cuando choque
 //asteroides
 int veloA = 5; //velocidad base
 int ayx = 27, ayx2 = 10; //coordenadas y aumentos en base x
@@ -42,23 +43,23 @@ void BColorMorado()  {Console::BackgroundColor = ConsoleColor::Magenta;}
 void DibujarFondo()
 {
     ColorBlanco();
-    Posicion(10, 3); cout <<   "*";
-    Posicion(30, 8); cout <<   "*";
-    Posicion(90, 4); cout <<   "*";
-    Posicion(20, 18); cout <<  "*";
-    Posicion(85, 20); cout <<  "*";
-    Posicion(15, 25); cout <<  "*";
+    Posicion(10, 3);   cout << "*";
+    Posicion(30, 8);   cout << "*";
+    Posicion(90, 4);   cout << "*";
+    Posicion(20, 18);  cout << "*";
+    Posicion(85, 20);  cout << "*";
+    Posicion(15, 25);  cout << "*";
     Posicion(105, 15); cout << "*";
 }
 void DibujarLuna()
 {
     ColorBlanco();
-    Posicion(50, 3);  cout << "     _..._     ";
-    Posicion(50, 4);  cout << "   .:::::::.   ";
-    Posicion(50, 5);  cout << "  :::::::::::  ";
-    Posicion(50, 6);  cout << "  :::::::::::  ";
-    Posicion(50, 7);  cout << "  `:::::::::'  ";
-    Posicion(50, 8);  cout << "    `'---'`    ";
+    Posicion(50, 3); cout << "     _..._     ";
+    Posicion(50, 4); cout << "   .:::::::.   ";
+    Posicion(50, 5); cout << "  :::::::::::  ";
+    Posicion(50, 6); cout << "  :::::::::::  ";
+    Posicion(50, 7); cout << "  `:::::::::'  ";
+    Posicion(50, 8); cout << "    `'---'`    ";
 }
 void DibujarMenu()
 {
@@ -81,24 +82,24 @@ void DibujarNaveGrande1(int x, int y) {
     Posicion(x+2, y+2); cout << "=====/";
 }
 void DibujarNaveGrande2(int x, int y) {
-    Posicion(x + 2, y);   cout << "/=====";
-    Posicion(x+1, y + 1); cout << "<-| | |"; Posicion(x + 8, y + 1); ColorNaranja(); cout << "="; Posicion(x+9, y + 1); ColorRojo(); cout << "3"; ColorBlanco();
+    Posicion(x + 2, y);     cout << "/=====";
+    Posicion(x+1, y + 1);   cout << "<-| | |"; Posicion(x + 8, y + 1); ColorNaranja(); cout << "="; Posicion(x+9, y + 1); ColorRojo(); cout << "3"; ColorBlanco();
     Posicion(x + 2, y + 2); cout << "\\=====";
 }
 void BorrarNaveGrande(int x, int y) {
-    Posicion(x + 2, y);   cout << "       ";
-    Posicion(x, y + 1); cout << "          ";
-    Posicion(x + 2, y + 2); cout << "      ";
+    Posicion(x + 2, y);    cout << "       ";
+    Posicion(x, y + 1);   cout << "          ";
+    Posicion(x + 2, y + 2);cout << "      ";
 }
 void DibujarPersonas(int x, int y) {
-    Posicion(x , y);    cout << "Ö";
-    Posicion(x, y + 1); cout << "▀";
+    Posicion(x, y);     cout << "(o)/";
+    Posicion(x, y + 1); cout << "/[]";
+    Posicion(x, y + 2); cout << "/ \\";
 }
-void AnimacionBorrar() {
+void AnimacionBorrar() {  //animación para borrar pantalla
     for (int i = 120; i > 0; i = i - 6) {
         for (int j = 0; j < 29; j++) {
             Posicion(i - 6, j); cout << "|      ";
-
         }
         _sleep(1);
     }
@@ -171,14 +172,14 @@ void Ancho(int x, int y, int n) {
         Posicion(x, y); cout << "*";
     }
 }
-void ImprimirWASD() {
+void ImprimirWASD() {  //visual
     ColorAzul(); Posicion(34, 27); cout << "W";
     ColorAzul(); Posicion(32, 28); cout << "A";
     ColorAzul(); Posicion(34, 29); cout << "S";
     ColorAzul(); Posicion(36, 28); cout << "D";
 
 }
-void AnimacionWASD(int x) {
+void AnimacionWASD(int x) {  //visual
     ColorAmarillo();
     switch (x) {
     case 1: Posicion(34, 27); cout << "W"; break;
@@ -222,7 +223,7 @@ void AsteroidesMov() {  //IMPORTANTE
     if (ay4 >= 25) { BorrarAsteroide(ayx + ayx2 * 3, ay4); ay4 = 0; av4 = rand() % 4 + veloA; at4 = 0; }  //VeloA es solo una variable sumatoria
     if (ay5 >= 25) { BorrarAsteroide(ayx + ayx2 * 4, ay5); ay5 = 0; av5 = rand() % 4 + veloA; at5 = 0; }  //at1..at2.. son la cantidad de "ticks" o "clocks" o las veces que tiene que cargar para avanzar 1 paso por asteroides, por ejemplo si at2 es 8, tendrá que cargar la secuencia repetitiva 8 veces para que pueda avanzar 1 paso
     if (ay6 >= 25) { BorrarAsteroide(ayx + ayx2 * 5, ay6); ay6 = 0; av6 = rand() % 4 + veloA; at6 = 0; }   //ayx es la coordenada orizontal general de todas, todas empiezan con 27 y son sumadas de 10 en 10
-    if (ay7 >= 25) { BorrarAsteroide(ayx + ayx2 * 6, ay7); ay7 = 0; av7 = rand() % 4 + veloA; at7 = 0; }    //
+    if (ay7 >= 25) { BorrarAsteroide(ayx + ayx2 * 6, ay7); ay7 = 0; av7 = rand() % 4 + veloA; at7 = 0; }    //rand() % 4, número aleatorio entre el 0 y el 3
     if (ay8 >= 25) { BorrarAsteroide(ayx + ayx2 * 7, ay8); ay8 = 0; av8 = rand() % 4 + veloA; at8 = 0; }
 
     if (at1 >= av1) { BorrarAsteroide(ayx, ay1);            ay1++; DibujarAsteroide(ayx, ay1);            at1=0; }  //esta locura
@@ -266,57 +267,56 @@ void AnimacionPanel() {   // Una animación para el panel pq lo sentí muy apaga
     }
     ColorBlanco();
 }
+void ColisionAparecerIzquierda() {
+    Posicion(px, py); cout << "          ";
+    Posicion(px, py + 1); cout << "          ";
+    Posicion(px, py + 2); cout << "          ";
+    px = 10; py = 11;
+}
+void ColisionAparecerDerecha() {
+    Posicion(px, py); cout << "          ";
+    Posicion(px, py + 1); cout << "          ";
+    Posicion(px, py + 2); cout << "          ";
+    px = 105; py = 11;
+}
 void colision() {
     if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
     if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
     if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
     if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
     if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
     if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
     if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
     if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) {
-        Posicion(px, py); cout << "          ";
-        Posicion(px, py + 1); cout << "          ";
-        Posicion(px, py + 2); cout << "          ";
-        px = 15; py = 13;
+        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
+        else { ColisionAparecerIzquierda(); }
     }
-}
 }
 void VelocidadCohete(){
     ColorAmarillo(); Posicion(70, 28); cout << velCohete << " km/h";
+}
+void PoscicionCoheteIzqoDer() {  //px y py == coordenadas de la nave // coheteizoder  // izquierda es falso, derecha es verdadero
+    if (px <= 12) coheteIzqoDer = false;
+    if (px >= 105) coheteIzqoDer = true;
 }
