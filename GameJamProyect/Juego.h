@@ -6,6 +6,7 @@ void IniciarJuego() {
 	coheteIzqoDer = true;  // condicion poscision cohete
 	owo = false;  // condicion orientacion cohete
 	vidas +=3;
+    if (vidas > 4) vidas = 4;
     personasEnL = 0; personasEnT = 12; personasEnNoC = 0; cicloDePersonas = 2, numeroDePersonas=4;
 	PaneldeControl();
 	DibujarNaveGrande2(px, py);    
@@ -25,12 +26,13 @@ void IniciarJuego() {
 		PoscicionCoheteIzqoDer();
 		AnimacionVelocidad(false);
 		AnimacionTextoPanelRescate(false);
-		if (vidas <= 0) { AnimacionNaveExplota(); whileiniciarjuego = false; vidas += 1; } // no sé que está pasando que al empezar de nuevo empiezas con 2 vidas, asi que hice la sumatoria nada mas
+        if (vidas == 0) { AnimacionNaveExplota(); whileiniciarjuego = false; AnimacionDerrota(); } // no sé que está pasando que al empezar de nuevo empiezas con 2 vidas, asi que hice la sumatoria nada mas
 		else colision();
-		if (tiempoRestante <= 0) { whileiniciarjuego = false; vidas += 1; }
-        if (personasEnL >= 12) { whileiniciarjuego = false; vidas += 1; }
+		if (tiempoRestante <= 0) { whileiniciarjuego = false; AnimacionDerrota(); }
+        if (personasEnL >= 12) { whileiniciarjuego = false; DibujarVictoria(); }
         _sleep(1);
 	} while (whileiniciarjuego);
+    vidas++;
 	AnimacionBorrar();
 }
 
@@ -72,7 +74,7 @@ void IniciarTutorial() {
                 enExplicacion = false;
             }
         }
-
+        Tutorialcondicion2 = false;
     } while (enExplicacion);
 
     if (jugarMiniJuego) {
@@ -177,4 +179,44 @@ void IniciarCreditos() {
         }
 	} while (uwu);
 	AnimacionBorrar();
+}
+void PantallaContinuar() {
+    int opContinuar = 1, opFinalPantalla;
+    bool Pantalla;
+    do {
+        BorrarYMovernaves();
+        DibujarLuna();
+        DibujarFondo();
+        DibujarNaves();
+        Posicion(20, 19); cout << "Desea Volver a jugar? Seleccione las opciones con W S";
+        Posicion(20, 20);  cout << "Z para confirmar";
+        if (opContinuar == 1) { ColorAmarillo(); Posicion(17, 22); cout << ">> "; }
+        else { ColorBlanco(); Posicion(17, 22); cout << "   "; }
+        Posicion(20, 22); cout << "1. Volver a Jugar    ";
+        if (opContinuar == 2) { ColorAmarillo(); ColorAmarillo(); Posicion(17, 24); cout << ">> "; }
+        else { ColorBlanco(); Posicion(17, 24); cout << "   "; }
+        Posicion(20, 24); cout << "2. Salir al Menu    ";
+
+        if (kbhit()) {
+            char tecla2 = _getch();
+            if (tecla2 == 'w' || tecla2 == 'W')
+            {
+                opContinuar--;
+                if (opContinuar < 1) opContinuar = 2;
+            }
+            if (tecla2 == 's' || tecla2 == 'S')
+            {
+                opContinuar++;
+                if (opContinuar > 2) opContinuar = 1;
+            }
+            if (tecla2 == 'z' || tecla2 == 'Z' || tecla2 == 13)
+            {
+                AnimacionBorrar();
+                opFinalPantalla = opContinuar;
+                Pantalla = false;
+            }
+        }
+    } while (Pantalla);
+    if (opFinalPantalla == 2) jugardenuevo = false;
+    _sleep(100);
 }

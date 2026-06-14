@@ -3,6 +3,7 @@
 int main()
 {
     Console::CursorVisible = false;
+    DibujarVictoria();
     bool enCarga; // condicion para el bucle
     Console::Clear();
     bool enCarga2 = true;
@@ -41,7 +42,15 @@ int main()
         } while (enCarga);
         switch (opFinal) {
         case 1:
-            if (yaJugoTutorial == false) Tutorial();  else IniciarJuego();
+            Tutorialcondicion2 = true;
+            do {
+                if (yaJugoTutorial == false) { Tutorial(); }
+                else { IniciarJuego(); }
+                if (Tutorialcondicion2) {
+                    jugardenuevo = true;
+                    PantallaContinuar();
+                }
+            } while (jugardenuevo);
             break;
         case 2:
             IniciarTutorial();
@@ -51,6 +60,7 @@ int main()
             break;
         case 4:
             enCarga2 = false;
+            break;
         }
         //if (jugardenuevo) IniciarJuego(); else enCarga2 = false;
     } while (enCarga2);

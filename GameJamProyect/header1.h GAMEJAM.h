@@ -28,7 +28,7 @@ int cicloDePersonas = 3, numeroDePersonas = 4;
 //vidas Deivid
 int vidas = 0;
 //booleanos para bucles Ch
-bool whileiniciarjuego = true, jugardenuevo;
+bool whileiniciarjuego = true, jugardenuevo, Tutorialcondicion2;
 //Tiempo Christian
 int tiempoRestante;
 
@@ -52,6 +52,20 @@ void BColorAmarillo() {Console::BackgroundColor = ConsoleColor::Yellow;}
 void BColorCafe()     {Console::BackgroundColor = ConsoleColor::DarkYellow;}
 void BColorMorado()   {Console::BackgroundColor = ConsoleColor::Magenta;}
 
+void DibujarEstrellas()  //deivid
+{
+    ColorBlanco();
+    Posicion(10, 3);   cout << "*";
+    Posicion(30, 2);   cout << "*";
+    Posicion(90, 4);   cout << "*";
+    Posicion(50, 6);   cout << "*";
+    Posicion(20, 25);  cout << "*";
+    Posicion(85, 20);  cout << "*";
+    Posicion(5, 23);   cout << "*";
+    Posicion(105, 27); cout << "*";
+    Posicion(80, 22);  cout << "*";
+    Posicion(55, 24);  cout << "*";
+}
 void DibujarFondo()
 {
     ColorBlanco();
@@ -171,7 +185,7 @@ void AnimacionBorrar() {  //animación para borrar pantalla
     Console::Clear();
 }
 void DibujarMediaLuna(int x, int y) {
-    ColorBlanco();
+    ColorAzul();
     Posicion(x+5, y);      cout << "_..";
     Posicion(x+3, y+1);  cout << ".::::";
     Posicion(x+2, y+2); cout << "::::::";
@@ -181,7 +195,7 @@ void DibujarMediaLuna(int x, int y) {
 }
 void DibujarMediaTierra(int x, int y)
 {
-    ColorBlanco();
+    ColorVerde();
     Posicion(x, y);    cout << "..._";
     Posicion(x, y+1);  cout << "::::::..";
     Posicion(x, y+2);  cout << ":::::::::.";
@@ -224,6 +238,63 @@ void DibujarCreditos(int x, int y) {
     Posicion(x, y+4); cout << "|      _||    __  ||    ___|| |_|   ||   |   |   |  |  |_|  ||_____  |";
     Posicion(x, y+5); cout << "|     |_ |   |  | ||   |___ |       ||   |   |   |  |       | _____| |";
     Posicion(x, y+6); cout << "|_______||___|  |_||_______||______| |___|   |___|  |_______||_______|";
+}
+void DibujarVictoria() {
+    bool victoria;
+    int vic = 0;
+    AnimacionBorrar();
+    do {
+        BorrarYMovernaves();
+        DibujarEstrellas();
+        if (vic == 32) { vic = 0; }
+        if (vic >= 16) { ColorVerde(); }
+        if (vic <= 16) { ColorAzul(); }
+        
+        Posicion(20, 5); cout << "    _ __  ____      _   __           ______                      ___     __________ ";
+        Posicion(20, 6); cout << "   (_)  |/  (_)____(_)_/_/ ____     / ____/_  ______ ___  ____  / (_)___/ /  _  / /";
+        Posicion(20, 7); cout << "  / / /|_/ / / ___/ / __ \\/ __ \\   / /   / / / / __ `__ \\/ __ \\/ / / __  / /_/ / /";
+        Posicion(20, 8); cout << " / / /  / / (__  ) / /_/ / / / /  / /___/ /_/ / / / / / / /_/ / / / /_/ /  _  /_/ ";
+        Posicion(20, 9); cout << "/_/_/  /_/_/____/_/\\____/_/ /_/   \\____/\\__,_/_/ /_/ /_/ .___/_/_/\\__,_/\\/ /_(_)";
+        Posicion(20, 10); cout << "                                                      /_/                      ";
+        
+        ColorVerde();
+        Posicion(20, 11); cout << "¡Todas las personas estan a salvo!";
+        ColorAmarillo();
+        Posicion(10, 27); cout << "Pulse Z para continuar";
+        ColorBlanco();
+        DibujarNaves();
+        vic++;
+        if (kbhit()) {
+            char tecla = getch();
+            if (tecla == 'z' || tecla == 'Z' || tecla == 13) {
+                victoria = false;
+            }
+        }
+    } while (victoria);
+
+}                                                                    
+void DibujarGameOver(int x, int y, int x1, int y1, int x2, int y2) {
+    ColorRojo();
+    Posicion(x, y);     cout << "   _____.  __                 __";
+    Posicion(x, y + 1); cout << "  /  _  \\ |  |   ____________/  |______   ";
+    Posicion(x, y + 2); cout << " /  /_\\  \\|  | _/ __ \\_  __ \\   __\\__  \\";
+    Posicion(x, y + 3); cout << "/    |    \\  |_\\  ___/|  | \\/|  |  / __ \\_";
+    Posicion(x, y + 4); cout << "\\____|__  /____/\\___  >__|   |__| (____  /";
+    Posicion(x, y + 5); cout << "        \\/          \\/                 \\/ ";
+
+    ColorAmarillo();
+    Posicion(x1, y1); cout << "==========================================================";
+    Posicion(x1, y1 + 1); cout << "[ MISION FALLIDA ]   Artemis II Lunar Expedition";
+    Posicion(x1, y1 + 2); cout << "[ CAUSA ]   Impacto de meteorico";
+    Posicion(x1, y1 + 3); cout << "==========================================================";
+
+    ColorRojo();
+    Posicion(x2, y2);     cout << "_________.                             __                __________.                 ___.__.    ___";
+    Posicion(x2, y2 + 1); cout << "\\_   ___ \\  ____   ____   ____ ___  __|__| ____   ____   \\______   \\ ___________  __| _/|__| __| _/____  ";
+    Posicion(x2, y2 + 2); cout << "/    \\  \\/ /  _ \\ /    \\_/ __ \\\\  \\/  /  |/  _ \\ /    \\   |     ___// __ \\_  __ \\/ __ | |  |/ __ |\\__  \\  ";
+    Posicion(x2, y2 + 3); cout << "\\     \\___(  <_> )   |  \\  ___/ >    <|  (  <_> )   |  \\  |    |   \\  ___/|  | \\/ /_/ | |  / /_/ | / __ \\_";
+    Posicion(x2, y2 + 4); cout << " \\______  /\\____/|___|  /\\___  >__/\\_ \\__|\\____/|___|  /  |____|    \\___  >__|  \\____ | |__\\____ |(____  /";
+    Posicion(x2, y2 + 5); cout << "        \\/            \\/     \\/      \\/              \\/                 \\/           \\/         \\/     \\/ ";
 }
 void Alto(int x, int y, int n) {
     for (int i = 0; i < n; i++) { y++; Posicion(x, y); cout << "*"; }
@@ -372,17 +443,16 @@ void ColisionAparecerIzquierda() {
     }
 }
 void colision() {  // colisiones Deivid
-    if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py)                       { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-    if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py)         { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-    if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-    if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-    if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-    if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-    if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-    if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
-}
-void RescatarPersonas() {
-
+    if (vidas >= 1) {
+        if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+        if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+        if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+        if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+        if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+        if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+        if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+        if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) { vidas--; ImprimirVidas(); ColisionAparecerIzquierda(); }
+    }
 }
 void PoscicionCoheteIzqoDer() {  //px y py == coordenadas de la nave // coheteizoder  // izquierda es falso, derecha es verdadero
     if (px <= 12 && coheteIzqoDer == true) { 
@@ -404,4 +474,21 @@ void PoscicionCoheteIzqoDer() {  //px y py == coordenadas de la nave // coheteiz
         if (cicloDePersonas!=0)
             if (numeroDePersonas == 0) { numeroDePersonas = 4; cicloDePersonas--; }
     }
+}
+void AnimacionDerrota() {
+    AnimacionBorrar();
+    bool derrota;
+    DibujarEstrellas();
+    DibujarGameOver(10, 7, 10, 13, 10, 17);
+    ColorAmarillo();
+    Posicion(10, 27); cout << "Pulse Z para continuar";
+    ColorBlanco();
+    do {
+        if (kbhit()) {
+            char tecla = getch();
+            if (tecla == 'z' || tecla == 'Z' || tecla == 13) {
+                derrota = false;
+            }
+        }
+    } while (derrota);
 }
