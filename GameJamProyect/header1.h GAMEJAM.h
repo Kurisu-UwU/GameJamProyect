@@ -266,6 +266,57 @@ void AnimacionPanel() {   // Una animación para el panel pq lo sentí muy apaga
     }
     ColorBlanco();
 }
+void colision() {
+    if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+    if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+    if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+    if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+    if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+    if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+    if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+    if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) {
+        Posicion(px, py); cout << "          ";
+        Posicion(px, py + 1); cout << "          ";
+        Posicion(px, py + 2); cout << "          ";
+        px = 15; py = 13;
+    }
+}
+}
 void VelocidadCohete(){
     ColorAmarillo(); Posicion(70, 28); cout << velCohete << " km/h";
 }

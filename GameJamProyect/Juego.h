@@ -23,6 +23,7 @@ void IniciarJuego() {
 		if (tiempoRestante == 30) velCohete = 4;
 		VelocidadCohete();
 		_sleep(1);
+		colision();
 	} while (1);
 }
 void IniciarTutorial() {
