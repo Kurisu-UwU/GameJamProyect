@@ -6,12 +6,12 @@ void Tutorial() {
 void IniciarJuego() {
 	PaneldeControl();
 	DibujarNaveGrande2(px, py);    
-	time_t inicio = time(nullptr);
-	time_t tiempopasao = 0;
+	time_t inicio = time(nullptr); //Guarda el tiempo local en la computadora
+	int tiempoaleatorio = rand() % 40 + 80;
 	do {
-		time_t tiempoahora = time(nullptr);
-		time_t tiempoIngame = tiempoahora - inicio;
-		time_t tiempoRestante = 120 - tiempoIngame;
+		time_t tiempoahora = time(nullptr); //Guarda el tiempo local en la computadora pero en bucle
+		time_t tiempoIngame = tiempoahora - inicio; //Compara la diferencia entre el tiempo registrado del principio con el tiempo registrado en bucle
+		time_t tiempoRestante = tiempoaleatorio - tiempoIngame; // la diferencia entre el tiempo aleatorio con la diferencia entre el tiempo de la computadora con la diferencia del tiempo registrado de la computadora al inicio del nivel
 		DibujarMediaLuna(112, 10);
 		DibujarMediaTierra(0, 6);
 		Protagonistamover();

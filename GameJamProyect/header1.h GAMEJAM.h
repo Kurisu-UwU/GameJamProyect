@@ -20,6 +20,8 @@ int ayx = 27, ayx2 = 10; //coordenadas y aumentos en base x
 int ay1 = 0, ay2 = 0, ay3 = 0, ay4 = 0, ay5 = 0, ay6 = 0, ay7 = 0, ay8 = 0; //Coordenadas en tiempo real en base y
 int av1 = veloA, av2= veloA+1, av3= veloA+2, av4= veloA+1, av5= veloA+2, av6= veloA, av7= veloA+2, av8= veloA+1; //Velocidades
 int at1 = 0, at2 = 0, at3 = 0, at4 = 0, at5 = 0, at6 = 0, at7 = 0, at8 = 0; //tiempo de espera
+//Personas
+int personasEnT = 12, personasEnL = 0, personasEnNoC = 0; //personas en tierra, personas en luna, personas en nave o cohete
 
 void Posicion(int x, int y){Console::SetCursorPosition(x, y);}
 
@@ -78,14 +80,29 @@ void DibujarMenu()
     if (opMenu == 4) cout << ">> 4. Salir      "; else cout << "   4. Salir      ";
 }
 void DibujarNaveGrande1(int x, int y) {
-    Posicion(x+2, y);   cout << "=====\\";
-    Posicion(x, y + 1); ColorRojo(); cout << "3"; Posicion(x + 1, y + 1); ColorNaranja(); cout << "="; Posicion(x + 2, y + 1); ColorBlanco(); cout << "| | |->"; 
-    Posicion(x+2, y+2); cout << "=====/";
+    Posicion(x + 2, y);   cout << "=====\\";
+    Posicion(x, y + 1); ColorRojo(); cout << "3"; Posicion(x + 1, y + 1); ColorNaranja(); cout << "="; Posicion(x + 2, y + 1); ColorBlanco(); cout << "| | |->";
+    Posicion(x + 2, y + 2); cout << "=====/";
+    if (personasEnNoC > 1) {
+        Posicion(x + 3, y + 1); BColorAmarillo(); cout << " "; Posicion(x + 5, y + 1); cout << " "; 
+    }
+    else if (personasEnNoC > 0) {
+        BColorAmarillo(); Posicion(x + 5, y + 1); cout << " ";
+    }
+    BColorNegro();
+
 }
 void DibujarNaveGrande2(int x, int y) {
     Posicion(x + 2, y);     cout << "/=====";
-    Posicion(x+1, y + 1);   cout << "<-| | |"; Posicion(x + 8, y + 1); ColorNaranja(); cout << "="; Posicion(x+9, y + 1); ColorRojo(); cout << "3"; ColorBlanco();
+    Posicion(x + 1, y + 1);   cout << "<-| | |"; Posicion(x + 8, y + 1); ColorNaranja(); cout << "="; Posicion(x + 9, y + 1); ColorRojo(); cout << "3"; ColorBlanco();
     Posicion(x + 2, y + 2); cout << "\\=====";
+    if (personasEnNoC > 1) {
+        Posicion(x + 5, y + 1); BColorAmarillo(); cout << " "; Posicion(x + 7, y + 1); cout << " ";
+    }
+    else if (personasEnNoC > 0) {
+        BColorAmarillo(); Posicion(x + 5, y + 1); cout << " ";
+    }
+    BColorNegro();
 }
 void BorrarNaveGrande(int x, int y) {
     Posicion(x + 2, y);    cout << "       ";
@@ -232,7 +249,7 @@ void ImprimirCorazon(int x, int y) {    // un corazoncito uwu
 }
 void AnimacionVelocidad(bool x) {
     if (x) avcx = 48;
-    if ((avcx >= 8 && avcx <=15) || (avcx >= 24 && avcx <= 31) || (avcx >= 40 && avcx <= 47)) ColorRojo(); else ColorAmarillo();
+    if ((avcx >= 8 && avcx <=16) || (avcx >= 24 && avcx <= 32) || (avcx >= 40 && avcx <= 48)) ColorRojo(); else ColorAmarillo();
     Posicion(70, 28); cout << velCohete << " km/h";
     if (avcx > 0) avcx--;
 }
@@ -275,7 +292,19 @@ void colision() {  // colisiones Deivid
     if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) ColisionAparecerIzquierda();
     if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) ColisionAparecerIzquierda();
 }
+void RescatarPersonas() {
+
+}
 void PoscicionCoheteIzqoDer() {  //px y py == coordenadas de la nave // coheteizoder  // izquierda es falso, derecha es verdadero
-    if (px <= 12 && coheteIzqoDer == true) { coheteIzqoDer = false; velCohete = rand() % 3 + 1; AnimacionVelocidad(true); }
-    if (px >= 105) coheteIzqoDer = true;
+    if (px <= 12 && coheteIzqoDer == true) { 
+        coheteIzqoDer = false; 
+        velCohete = rand() % 3 + 1; 
+        AnimacionVelocidad(true); 
+        personasEnT -= 2; personasEnNoC += 2;
+    }
+    if (px >= 105 && coheteIzqoDer == false) { 
+        coheteIzqoDer = true; 
+        personasEnNoC -= 2; personasEnL += 2;
+        ColorVerde(); Posicion(103, 28); cout << personasEnL;
+    }
 }
