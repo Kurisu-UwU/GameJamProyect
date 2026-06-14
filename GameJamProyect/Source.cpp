@@ -8,7 +8,7 @@ int main()
     bool enCarga2 = true;
     bool Menucondicioncreditos = true;
     do {
-        srand(time(0));
+        srand(time(0)); // condición aleatoria Christian
         do //para mantener el menu en pantalla
         {
             enCarga = true;
@@ -44,7 +44,7 @@ int main()
         } while (enCarga);
         switch (opFinal) {
         case 1:
-            IniciarJuego();
+            if (yaJugoTutorial == false) Tutorial();  else IniciarJuego();
             break;
         case 2:
             IniciarTutorial();
@@ -55,6 +55,7 @@ int main()
         case 4:
             enCarga2 = false;
         }
+        //if (jugardenuevo) IniciarJuego(); else enCarga2 = false;
     } while (enCarga2);
     Console::Clear();
     return 0;

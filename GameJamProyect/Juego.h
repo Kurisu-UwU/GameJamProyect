@@ -1,9 +1,11 @@
 #include "header1.h GAMEJAM.h"
 
-void Tutorial() {
-
-}
 void IniciarJuego() {
+	whileiniciarjuego = true; // condicion bucle
+	coheteIzqoDer = true;  // condicion poscision cohete
+	owo = false;  // condicion orientacion cohete
+	vidas +=3;
+    personasEnL = 0; personasEnT = 12; personasEnNoC = 0;
 	PaneldeControl();
 	DibujarNaveGrande2(px, py);    
 	time_t inicio = time(nullptr); //Guarda el tiempo local en la computadora
@@ -11,7 +13,7 @@ void IniciarJuego() {
 	do {
 		time_t tiempoahora = time(nullptr); //Guarda el tiempo local en la computadora pero en bucle
 		time_t tiempoIngame = tiempoahora - inicio; //Compara la diferencia entre el tiempo registrado del principio con el tiempo registrado en bucle
-		time_t tiempoRestante = tiempoaleatorio - tiempoIngame; // la diferencia entre el tiempo aleatorio con la diferencia entre el tiempo de la computadora con la diferencia del tiempo registrado de la computadora al inicio del nivel
+		tiempoRestante = tiempoaleatorio - tiempoIngame; // la diferencia entre el tiempo aleatorio con la diferencia entre el tiempo de la computadora con la diferencia del tiempo registrado de la computadora al inicio del nivel
 		DibujarMediaLuna(112, 10);
 		DibujarMediaTierra(0, 6);
 		Protagonistamover();
@@ -20,12 +22,128 @@ void IniciarJuego() {
 		ColorVerde(); Posicion(50, 28); cout << tiempoRestante << "s  ";
 		PoscicionCoheteIzqoDer();
 		AnimacionVelocidad(false);
+		AnimacionTextoPanelRescate(false);
+		if (vidas <= 0) { AnimacionNaveExplota(); whileiniciarjuego = false; vidas += 1; } // no sé que está pasando que al empezar de nuevo empiezas con 2 vidas, asi que hice la sumatoria nada mas
+		else colision();
+		if (tiempoRestante <= 0) { whileiniciarjuego = false; vidas += 1; }
 		_sleep(1);
-		colision();
-	} while (1);
+	} while (whileiniciarjuego);
+	AnimacionBorrar();
 }
-void IniciarTutorial() {
 
+void IniciarTutorial() {
+    bool enExplicacion = true;
+    bool jugarMiniJuego = false;
+
+    // instrucciones del tutorial ;D
+    Console::Clear();
+    do {
+        DibujarFondo();
+        BorrarYMovernaves();
+
+        ColorAzul();
+        Posicion(35, 4); cout << "=========================================";
+        Posicion(35, 5); cout << "|      TUTORIAL: MISION ARTEMIS II      |";
+        Posicion(35, 6); cout << "=========================================";
+
+        ColorVerde();  Posicion(20, 10); cout << "CONTROLES:";
+        ColorBlanco(); Posicion(20, 11); cout << "- Usa W A S D para pilotar la nave Orion.";
+
+        ColorVerde();  Posicion(20, 14); cout << "REGLAS DEL JUEGO:";
+        ColorBlanco(); Posicion(20, 15); cout << "- Recoge personas en la Tierra (Izquierda) y llevalas a la Luna (Derecha).";
+        Posicion(20, 16); cout << "- La nave solo tiene espacio para 2 personas por viaje.";
+        Posicion(20, 17); cout << "- Evita los meteoritos (@) o perderas una vida.";
+
+        ColorAmarillo();
+        Posicion(35, 21); cout << ">> Presiona 'X' para PROBAR LOS CONTROLES";
+        Posicion(35, 23); cout << ">> Presiona 'Z' para REGRESAR AL MENU";
+        DibujarNaves();
+        if (kbhit()) {
+            char tecla = getch();
+            if (tecla == 'x' || tecla == 'X') {
+                jugarMiniJuego = true;
+                enExplicacion = false;
+            }
+            if (tecla == 'z' || tecla == 'Z' || tecla == 13) {
+                enExplicacion = false;
+            }
+        }
+
+    } while (enExplicacion);
+
+    if (jugarMiniJuego) {
+        AnimacionBorrar();
+        DibujarFondo();
+        px = 15;
+        py = 11;
+        owo = true;
+
+        bool miniJuegoCorriendo = true;
+        bool objetivoCumplido = false;
+
+        do {
+            DibujarMediaLuna(112, 10);
+
+            ColorAmarillo(); Posicion(15, 23); cout << "OBJETIVO ACTUAL: ";
+            ColorBlanco();
+
+            if (objetivoCumplido == false) {
+                Posicion(32, 23); cout << "Mueve la nave con 'D' hasta la Luna (Derecha).           ";
+            }
+            else {
+                ColorVerde();
+                Posicion(32, 23); cout << "¡Controles dominados! Presiona 'Z' para salir al menu.   ";
+            }
+            //logica para evitar que el jugador pueda salir del mini juego sin cumplir el objetivo
+            if (kbhit()) {
+                char teclaMini = getch();
+
+                //validar
+                if ((teclaMini == 'z' || teclaMini == 'Z' || teclaMini == 13) && objetivoCumplido) {
+                    miniJuegoCorriendo = false;
+                }
+
+                // movimiento del usuario
+                BorrarNaveGrande(px, py);
+                WASDmover(teclaMini);
+                if (teclaMini == 'd' || teclaMini == 'D') owo = true;
+                if (teclaMini == 'a' || teclaMini == 'A') owo = false;
+            }
+            if (owo) DibujarNaveGrande1(px, py);
+            else DibujarNaveGrande2(px, py);
+
+            // condicion de victoria del mini juego
+            if (px >= 100) {
+                objetivoCumplido = true;
+                yaJugoTutorial = true;
+            }
+            _sleep(40);
+        } while (miniJuegoCorriendo);
+    }
+    AnimacionBorrar();
+}
+void Tutorial() {
+	DibujarFondo();
+	ColorAmarillo(); //advertencia para el usuario que no ha jugado el tutorial
+	Posicion(40, 11); cout << "=======================================";
+	Posicion(40, 12); cout << "|   ADVERTENCIA: NO HAS COMPLETADO    |";
+	Posicion(40, 13); cout << "|            EL TUTORIAL              |";
+	Posicion(40, 14); cout << "=======================================";
+
+	ColorBlanco();
+	Posicion(38, 16); cout << "¿Deseas jugar el tutorial primero? (S/N)";
+
+	char opcionPrevia;
+	do {
+		opcionPrevia = getch();
+	} while (opcionPrevia != 's' && opcionPrevia != 'S' && opcionPrevia != 'n' && opcionPrevia != 'N');
+    AnimacionBorrar();
+	if (opcionPrevia == 's' || opcionPrevia == 'S') {
+		IniciarTutorial();
+	}
+	else {
+		IniciarJuego();
+	}	
 }
 void IniciarCreditos() {
     bool uwu = true;
