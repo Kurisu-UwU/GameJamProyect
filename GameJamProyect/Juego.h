@@ -1,11 +1,12 @@
 #include "header1.h GAMEJAM.h"
 
+//iniciar todo el juego Christian
 void IniciarJuego() {
 	whileiniciarjuego = true; // condicion bucle
 	coheteIzqoDer = true;  // condicion poscision cohete
 	owo = false;  // condicion orientacion cohete
 	vidas +=3;
-    personasEnL = 0; personasEnT = 12; personasEnNoC = 0;
+    personasEnL = 0; personasEnT = 12; personasEnNoC = 0; cicloDePersonas = 2, numeroDePersonas=4;
 	PaneldeControl();
 	DibujarNaveGrande2(px, py);    
 	time_t inicio = time(nullptr); //Guarda el tiempo local en la computadora
@@ -16,6 +17,7 @@ void IniciarJuego() {
 		tiempoRestante = tiempoaleatorio - tiempoIngame; // la diferencia entre el tiempo aleatorio con la diferencia entre el tiempo de la computadora con la diferencia del tiempo registrado de la computadora al inicio del nivel
 		DibujarMediaLuna(112, 10);
 		DibujarMediaTierra(0, 6);
+        DibujarVariasPersonas(1,3);
 		Protagonistamover();
 		AsteroidesMov();
 		AnimacionPanel();
@@ -26,11 +28,13 @@ void IniciarJuego() {
 		if (vidas <= 0) { AnimacionNaveExplota(); whileiniciarjuego = false; vidas += 1; } // no sé que está pasando que al empezar de nuevo empiezas con 2 vidas, asi que hice la sumatoria nada mas
 		else colision();
 		if (tiempoRestante <= 0) { whileiniciarjuego = false; vidas += 1; }
-		_sleep(1);
+        if (personasEnL >= 12) { whileiniciarjuego = false; vidas += 1; }
+        _sleep(1);
 	} while (whileiniciarjuego);
 	AnimacionBorrar();
 }
 
+// Iniciar el Tutorial Stephen
 void IniciarTutorial() {
     bool enExplicacion = true;
     bool jugarMiniJuego = false;
@@ -122,6 +126,8 @@ void IniciarTutorial() {
     }
     AnimacionBorrar();
 }
+
+//advertencia del tutorial Stephen
 void Tutorial() {
 	DibujarFondo();
 	ColorAmarillo(); //advertencia para el usuario que no ha jugado el tutorial
@@ -129,10 +135,8 @@ void Tutorial() {
 	Posicion(40, 12); cout << "|   ADVERTENCIA: NO HAS COMPLETADO    |";
 	Posicion(40, 13); cout << "|            EL TUTORIAL              |";
 	Posicion(40, 14); cout << "=======================================";
-
 	ColorBlanco();
 	Posicion(38, 16); cout << "¿Deseas jugar el tutorial primero? (S/N)";
-
 	char opcionPrevia;
 	do {
 		opcionPrevia = getch();
@@ -145,6 +149,8 @@ void Tutorial() {
 		IniciarJuego();
 	}	
 }
+
+//los créditos deivid
 void IniciarCreditos() {
     bool uwu = true;
 	do {

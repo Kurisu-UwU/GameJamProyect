@@ -24,6 +24,7 @@ int av1 = veloA, av2= veloA+1, av3= veloA+2, av4= veloA+1, av5= veloA+2, av6= ve
 int at1 = 0, at2 = 0, at3 = 0, at4 = 0, at5 = 0, at6 = 0, at7 = 0, at8 = 0; //tiempo de espera
 //Personas Christian
 int personasEnT, personasEnL, personasEnNoC; //personas en tierra, personas en luna, personas en nave o cohete
+int cicloDePersonas = 3, numeroDePersonas = 4;
 //vidas Deivid
 int vidas = 0;
 //booleanos para bucles Ch
@@ -143,10 +144,24 @@ void BorrarNaveGrande(int x, int y) {
     Posicion(x + 2, y + 2);cout << "      ";
 }
 
-void DibujarPersonas(int x, int y) {
-    Posicion(x, y);     cout << "(o)/";
+void DibujarPersona(int x, int y) {      // DIBUJAR PERSONAS
+    Posicion(x, y);     cout << "(o)/"; 
     Posicion(x, y + 1); cout << "/[]";
-    Posicion(x, y + 2); cout << "/ \\";
+    Posicion(x, y + 2); cout << "/ \\";                       // DIBUJAR CARIAS PEEEEEEEEEERSOOOOOOONAAAAS  //int cicloDePersonas = 3, numeroDePersonas = 4;
+}
+void BorrarPersona(int x, int y) {
+    Posicion(x, y);     cout << "    ";
+    Posicion(x, y + 1); cout << "   ";
+    Posicion(x, y + 2); cout << "   ";
+}
+void DibujarVariasPersonas(int x, int y) {                 //int personasEnT, personasEnL, personasEnNoC; //personas en tierra, personas en luna, personas en nave o cohete
+    BorrarPersona(x + 2, y);
+    BorrarPersona(x + 10, y + 3);
+    BorrarPersona(x + 10, y + 13);
+    BorrarPersona(x + 2, y + 17); if (numeroDePersonas >= 4) { ColorAmarillo(); DibujarPersona(x + 2, y); }
+    if (numeroDePersonas >= 3) { ColorMorado(); DibujarPersona(x + 10, y + 3); }
+    if (numeroDePersonas >= 2) { ColorVerde(); DibujarPersona(x + 10, y + 13); }
+    if (numeroDePersonas >= 1) { ColorRojo(); DibujarPersona(x + 2, y + 17); }
 }
 void AnimacionBorrar() {  //animación para borrar pantalla
     for (int i = 120; i > 0; i = i - 6) {
@@ -332,7 +347,7 @@ void PaneldeControl(){                                         //quité la secue
 void AnimacionTextoPanelRescate(int x) {
     if (x) atpr = 48;
     if ((atpr >= 8 && atpr <= 16) || (atpr >= 24 && atpr <= 32) || (atpr >= 40 && atpr <= 48)) ColorRojo(); else ColorAmarillo();
-    Posicion(103, 28); cout << personasEnL;
+    Posicion(103, 28); cout << personasEnL << "/12";
     if (atpr > 0) atpr--;
 }
 void AnimacionPanel() {   // Una animación para el panel pq lo sentí muy apagado
@@ -375,11 +390,18 @@ void PoscicionCoheteIzqoDer() {  //px y py == coordenadas de la nave // coheteiz
         velCohete = rand() % 3 + 1; 
         AnimacionVelocidad(true); 
         personasEnT -= 2; personasEnNoC += 2;
+        BorrarPersona(1 + 2, 3);
+        BorrarPersona(1 + 10, 3 + 3);
+        BorrarPersona(1 + 10, 3 + 13);
+        BorrarPersona(1 + 2, 3 + 17);
+        numeroDePersonas -= 2;
     }
     if (px >= 105 && coheteIzqoDer == false) { 
         coheteIzqoDer = true; 
         personasEnNoC -= 2; personasEnL += 2;
-        ColorVerde(); Posicion(103, 28); AnimacionTextoPanelRescate(true);
-
+        ColorVerde(); Posicion(103, 28); 
+        AnimacionTextoPanelRescate(true);
+        if (cicloDePersonas!=0)
+            if (numeroDePersonas == 0) { numeroDePersonas = 4; cicloDePersonas--; }
     }
 }

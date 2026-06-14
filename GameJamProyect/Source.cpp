@@ -13,14 +13,11 @@ int main()
         {
             enCarga = true;
             BorrarYMovernaves();
-
             DibujarLuna();
             DibujarMenu();
             DibujarFondo();
             Posicion(43, 11); cout << "|  [Atermis II Expedition]  |";
-
             DibujarNaves();
-
             if (kbhit())
             {
                 char tecla = getch();
