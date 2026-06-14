@@ -13,6 +13,7 @@ bool owo; // boleano para el movimiento del cohete
 int velCohete = 1;
 int animacionpanel = 0, panel2= 0;
 bool coheteIzqoDer = true; // boleano para determinar donde aparecerá el cohete cuando choque
+int avcx = 0; //Para la animación de la velocidad del cohete
 //asteroides
 int veloA = 5; //velocidad base
 int ayx = 27, ayx2 = 10; //coordenadas y aumentos en base x
@@ -229,6 +230,12 @@ void ImprimirCorazon(int x, int y) {    // un corazoncito uwu
     Posicion(x, y + 1); cout << "      ";
     Posicion(x + 2, y + 2); cout << "  "; BColorNegro();
 }
+void AnimacionVelocidad(bool x) {
+    if (x) avcx = 48;
+    if ((avcx >= 8 && avcx <=15) || (avcx >= 24 && avcx <= 31) || (avcx >= 40 && avcx <= 47)) ColorRojo(); else ColorAmarillo();
+    Posicion(70, 28); cout << velCohete << " km/h";
+    if (avcx > 0) avcx--;
+}
 void PaneldeControl(){                                         //quité la secuencia repetitiva por que por alguna razón que no supe el por que pues dejó de funcionar, me dió weba asiq lo imprimí :VVVV                                  
     ColorVerde();Posicion(0, 26); cout << "========================================================================================================================";
     ImprimirCorazon(1,27);ImprimirCorazon(8, 27);ImprimirCorazon(15, 27);
@@ -256,50 +263,19 @@ void ColisionAparecerIzquierda() {
     Posicion(px, py); cout << "          ";
     Posicion(px, py + 1); cout << "          ";
     Posicion(px, py + 2); cout << "          ";
-    px = 10; py = 11;
+    py = 11; if (coheteIzqoDer) px = 105; else px = 10;
 }
-void ColisionAparecerDerecha() {
-    Posicion(px, py); cout << "          ";
-    Posicion(px, py + 1); cout << "          ";
-    Posicion(px, py + 2); cout << "          ";
-    px = 105; py = 11;
+void colision() {  // colisiones Deivid
+    if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py)                       ColisionAparecerIzquierda();
+    if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py)         ColisionAparecerIzquierda();
+    if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) ColisionAparecerIzquierda();
+    if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) ColisionAparecerIzquierda();
+    if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) ColisionAparecerIzquierda();
+    if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) ColisionAparecerIzquierda();
+    if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) ColisionAparecerIzquierda();
+    if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) ColisionAparecerIzquierda();
 }
-void colision() {
-    if (ayx <= px + 7 && ayx >= px + 2 && ay1 < py + 2 && ay1 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-    if (ayx + ayx2 <= px + 7 && ayx + ayx2 >= px + 2 && ay2 < py + 2 && ay2 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-    if (ayx + ayx2 * 2 <= px + 7 && ayx + ayx2 * 2 >= px + 2 && ay3 < py + 2 && ay3 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-    if (ayx + ayx2 * 3 <= px + 7 && ayx + ayx2 * 3 >= px + 2 && ay4 < py + 2 && ay4 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-    if (ayx + ayx2 * 4 <= px + 7 && ayx + ayx2 * 4 >= px + 2 && ay5 < py + 2 && ay5 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-    if (ayx + ayx2 * 5 <= px + 7 && ayx + ayx2 * 5 >= px + 2 && ay6 < py + 2 && ay6 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-    if (ayx + ayx2 * 6 <= px + 7 && ayx + ayx2 * 6 >= px + 2 && ay7 < py + 2 && ay7 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-    if (ayx + ayx2 * 7 <= px + 7 && ayx + ayx2 * 7 >= px + 2 && ay8 < py + 2 && ay8 >= py) {
-        if (coheteIzqoDer) { ColisionAparecerDerecha(); }
-        else { ColisionAparecerIzquierda(); }
-    }
-}
-void VelocidadCohete() { ColorAmarillo(); Posicion(70, 28); cout << velCohete << " km/h"; }
 void PoscicionCoheteIzqoDer() {  //px y py == coordenadas de la nave // coheteizoder  // izquierda es falso, derecha es verdadero
-    if (px <= 12) coheteIzqoDer = false;
+    if (px <= 12 && coheteIzqoDer == true) { coheteIzqoDer = false; velCohete = rand() % 3 + 1; AnimacionVelocidad(true); }
     if (px >= 105) coheteIzqoDer = true;
 }

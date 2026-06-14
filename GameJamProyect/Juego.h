@@ -18,11 +18,8 @@ void IniciarJuego() {
 		AsteroidesMov();
 		AnimacionPanel();
 		ColorVerde(); Posicion(50, 28); cout << tiempoRestante << "s  ";
-		if (tiempoRestante == 90) velCohete = 2;
-		if (tiempoRestante == 60) velCohete = 3;
-		if (tiempoRestante == 30) velCohete = 4;
 		PoscicionCoheteIzqoDer();
-		VelocidadCohete();
+		AnimacionVelocidad(false);
 		_sleep(1);
 		colision();
 	} while (1);
