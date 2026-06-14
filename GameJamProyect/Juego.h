@@ -13,6 +13,7 @@ void IniciarJuego() {
 		AsteroidesMov();
 		AnimacionPanel();
 		_sleep(1);
+		colision();
 	} while (1);
 }
 void IniciarTutorial() {
