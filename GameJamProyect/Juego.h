@@ -5,13 +5,23 @@ void Tutorial() {
 }
 void IniciarJuego() {
 	PaneldeControl();
-	DibujarNaveGrande2(px, py);
+	DibujarNaveGrande2(px, py);    
+	time_t inicio = time(nullptr);
+	time_t tiempopasao = 0;
 	do {
+		time_t tiempoahora = time(nullptr);
+		time_t tiempoIngame = tiempoahora - inicio;
+		time_t tiempoRestante = 120 - tiempoIngame;
 		DibujarMediaLuna(112, 10);
 		DibujarMediaTierra(0, 6);
 		Protagonistamover();
 		AsteroidesMov();
 		AnimacionPanel();
+		ColorVerde(); Posicion(50, 28); cout << tiempoRestante << "s  ";
+		if (tiempoRestante == 90) velCohete = 2;
+		if (tiempoRestante == 60) velCohete = 3;
+		if (tiempoRestante == 30) velCohete = 4;
+		VelocidadCohete();
 		_sleep(1);
 	} while (1);
 }
