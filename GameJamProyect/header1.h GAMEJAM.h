@@ -79,13 +79,13 @@ void DibujarFondo()
 }
 void DibujarLuna()
 {
-    ColorBlanco();
-    Posicion(50, 3); cout << "     _..._     ";
-    Posicion(50, 4); cout << "   .:::::::.   ";
+    ColorAzul();
+    Posicion(50, 2); cout << "     _..._     ";
+    Posicion(50, 3); cout << "   .:::::::.   ";
+    Posicion(50, 4); cout << "  :::::::::::  ";
     Posicion(50, 5); cout << "  :::::::::::  ";
-    Posicion(50, 6); cout << "  :::::::::::  ";
-    Posicion(50, 7); cout << "  `:::::::::'  ";
-    Posicion(50, 8); cout << "    `'---'`    ";
+    Posicion(50, 6); cout << "  `:::::::::'  ";
+    Posicion(50, 7); cout << "    `'---'`    ";
 }
 void DibujarMenu()
 {
@@ -230,6 +230,17 @@ void DibujarNaves() {
     Posicion(n3x, n3y); cout << ">=>";
     _sleep(50);
 }
+void Dibujartitulo() {
+    ColorMorado();
+    Posicion(10, 8); cout << "         _                      _       _____ _____   ________   __               _ _ _   _             ";
+    Posicion(10, 9); cout << "    /\\  | |                    (_)     |_   _|_   _| |  ____\\ \\ / /              | (_) | (_)            ";
+    Posicion(10, 10); cout << "   /  \\ | |_ ___ _ __ _ __ ___  _ ___    | |   | |   | |__   \\ V / _ __   ___  __| |_| |_ _  ___  _ __  ";
+    Posicion(10, 11); cout << "  / /\\ \\| __/ _ \\ '__| '_ ` _ \\| / __|   | |   | |   |  __|   > < | '_ \\ / _ \\/ _` | | __| |/ _ \\| '_ \\ ";
+    Posicion(10, 12); cout << " / ____ \\ ||  __/ |  | | | | | | \\__ \\  _| |_ _| |_  | |____ / . \\| |_) |  __/ (_| | | |_| | (_) | | | |";
+    Posicion(10, 13); cout << "/_/    \\_\\__\\___|_|  |_| |_| |_|_|___/ |_____|_____| |______/_/ \\_\\ .__/ \\___|\\__,_|_|\\__|_|\\___/|_| |_|";
+    Posicion(10, 14); cout << "                                                                  | |";
+    Posicion(10, 15); cout << "                                                                  |_|";
+}
 void DibujarCreditos(int x, int y) {
     Posicion(x, y);   cout << " _______  ______    _______  ______   ___   _______  _______  _______";
     Posicion(x, y+1); cout << "|       ||    _ |  |       ||      | |   | |       ||       ||       |";
@@ -295,6 +306,25 @@ void DibujarGameOver(int x, int y, int x1, int y1, int x2, int y2) {
     Posicion(x2, y2 + 3); cout << "\\     \\___(  <_> )   |  \\  ___/ >    <|  (  <_> )   |  \\  |    |   \\  ___/|  | \\/ /_/ | |  / /_/ | / __ \\_";
     Posicion(x2, y2 + 4); cout << " \\______  /\\____/|___|  /\\___  >__/\\_ \\__|\\____/|___|  /  |____|    \\___  >__|  \\____ | |__\\____ |(____  /";
     Posicion(x2, y2 + 5); cout << "        \\/            \\/     \\/      \\/              \\/                 \\/           \\/         \\/     \\/ ";
+}
+void Presentacion(int x, int y) {
+    ColorVerde();
+    Posicion(x, y);       cout << "    ____  _                            _     __ ";
+    Posicion(x, y+1);     cout << "   / __ )(_)__  ____ _   _____  ____  (_)___/ /___     ____ _ ";
+    Posicion(x, y+2);     cout << "  / __  / / _ \\/ __ \\ | / / _ \\/ __ \\/ / __  / __ \\   / __ `/ ";
+    Posicion(x, y+3);     cout << " / /_/ / /  __/ / / / |/ /  __/ / / / / /_/ / /_/ /  / /_/ / ";
+    Posicion(x, y+4);     cout << "/_____/_/\\___/_/ /_/|___/\\___/_/ /_/_/\\__,_/\\____/   \\__,_/  ";
+    Posicion(x, y+5);     cout << "                                                             ";
+}
+void Animacionpresentacion() {
+    for (int i = 60; i>=10;i--) {
+        Presentacion(i, 10);
+        _sleep(2);
+        DibujarEstrellas();
+        DibujarFondo();
+    }
+    _sleep(2000);
+    AnimacionBorrar();
 }
 void Alto(int x, int y, int n) {
     for (int i = 0; i < n; i++) { y++; Posicion(x, y); cout << "*"; }

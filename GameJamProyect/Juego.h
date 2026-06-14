@@ -6,8 +6,9 @@ void IniciarJuego() {
 	coheteIzqoDer = true;  // condicion poscision cohete
 	owo = false;  // condicion orientacion cohete
 	vidas +=3;
-    if (vidas > 4) vidas = 4;
+    if (vidas > 3) vidas = 3;
     personasEnL = 0; personasEnT = 12; personasEnNoC = 0; cicloDePersonas = 2, numeroDePersonas=4;
+    px = 100, py = 11;
 	PaneldeControl();
 	DibujarNaveGrande2(px, py);    
 	time_t inicio = time(nullptr); //Guarda el tiempo local en la computadora
@@ -26,7 +27,7 @@ void IniciarJuego() {
 		PoscicionCoheteIzqoDer();
 		AnimacionVelocidad(false);
 		AnimacionTextoPanelRescate(false);
-        if (vidas == 0) { AnimacionNaveExplota(); whileiniciarjuego = false; AnimacionDerrota(); } // no sé que está pasando que al empezar de nuevo empiezas con 2 vidas, asi que hice la sumatoria nada mas
+        if (vidas == 0) { AnimacionNaveExplota(); whileiniciarjuego = false; AnimacionDerrota(); vidas++; } // no sé que está pasando que al empezar de nuevo empiezas con 2 vidas, asi que hice la sumatoria nada mas
 		else colision();
 		if (tiempoRestante <= 0) { whileiniciarjuego = false; AnimacionDerrota(); }
         if (personasEnL >= 12) { whileiniciarjuego = false; DibujarVictoria(); }

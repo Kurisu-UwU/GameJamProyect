@@ -3,7 +3,7 @@
 int main()
 {
     Console::CursorVisible = false;
-    DibujarVictoria();
+    Animacionpresentacion();
     bool enCarga; // condicion para el bucle
     Console::Clear();
     bool enCarga2 = true;
@@ -17,7 +17,8 @@ int main()
             DibujarLuna();
             DibujarMenu();
             DibujarFondo();
-            Posicion(43, 11); cout << "|  [Atermis II Expedition]  |";
+            ColorMorado();
+            Dibujartitulo();
             DibujarNaves();
             if (kbhit())
             {
