@@ -12,7 +12,7 @@ void IniciarJuego() {
 	PaneldeControl();
 	DibujarNaveGrande2(px, py);    
 	time_t inicio = time(nullptr); //Guarda el tiempo local en la computadora
-	int tiempoaleatorio = rand() % 40 + 80;
+	int tiempoaleatorio = rand() % 40 + 81;
 	do {
 		time_t tiempoahora = time(nullptr); //Guarda el tiempo local en la computadora pero en bucle
 		time_t tiempoIngame = tiempoahora - inicio; //Compara la diferencia entre el tiempo registrado del principio con el tiempo registrado en bucle

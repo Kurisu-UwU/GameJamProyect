@@ -1,6 +1,6 @@
 #include "Juego.h"
 
-int main()
+int main() // Todo esto es el menú
 {
     Console::CursorVisible = false;
     Animacionpresentacion();
@@ -45,7 +45,7 @@ int main()
         case 1:
             Tutorialcondicion2 = true;
             do {
-                if (yaJugoTutorial == false) { Tutorial(); }
+                if (yaJugoTutorial == false) { Tutorial(); } // condición para saber si ya jugaste el tutorial
                 else { IniciarJuego(); }
                 if (Tutorialcondicion2) {
                     jugardenuevo = true;

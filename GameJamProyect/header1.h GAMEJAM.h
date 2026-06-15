@@ -52,7 +52,7 @@ void BColorAmarillo() {Console::BackgroundColor = ConsoleColor::Yellow;}
 void BColorCafe()     {Console::BackgroundColor = ConsoleColor::DarkYellow;}
 void BColorMorado()   {Console::BackgroundColor = ConsoleColor::Magenta;}
 
-void DibujarEstrellas()  //deivid
+void DibujarEstrellas() //deivid
 {
     ColorBlanco();
     Posicion(10, 3);   cout << "*";
@@ -91,16 +91,20 @@ void DibujarMenu()
 {
     ColorBlanco();
     Posicion(49, 16);
-    if (opMenu == 1) cout << ">> 1. Iniciar    "; else cout << "   1. Iniciar    ";
-
+    if (opMenu == 1) { ColorAmarillo();  cout << ">=> 1. Iniciar    "; }
+    else cout << "   1. Iniciar    ";
+    ColorBlanco();
     Posicion(49, 18);
-    if (opMenu == 2) cout << ">> 2. Tutorial   "; else cout << "   2. Tutorial   ";
-
+    if (opMenu == 2) { ColorAmarillo();  cout << ">=> 2. Tutorial   ";
+    } else cout << "   2. Tutorial   ";
+    ColorBlanco();
     Posicion(49, 20);
-    if (opMenu == 3) cout << ">> 3. Creditos   "; else cout << "   3. Creditos   ";
-
+    if (opMenu == 3) { ColorAmarillo();  cout << ">=> 3. Creditos   ";
+    } else cout << "   3. Creditos   ";
+    ColorBlanco();
     Posicion(49, 22);
-    if (opMenu == 4) cout << ">> 4. Salir      "; else cout << "   4. Salir      ";
+    if (opMenu == 4) { ColorAmarillo();  cout << ">=> 4. Salir      ";
+    } else cout << "   4. Salir      ";
 }
 void DibujarNaveGrande1(int x, int y) {
     ColorBlanco();
@@ -184,7 +188,7 @@ void AnimacionBorrar() {  //animación para borrar pantalla
     }
     Console::Clear();
 }
-void DibujarMediaLuna(int x, int y) {
+void DibujarMediaLuna(int x, int y) { //Christian
     ColorAzul();
     Posicion(x+5, y);      cout << "_..";
     Posicion(x+3, y+1);  cout << ".::::";
@@ -193,7 +197,7 @@ void DibujarMediaLuna(int x, int y) {
     Posicion(x+2, y+4); cout << "`:::::";
     Posicion(x+4, y+5);   cout << "`'--";
 }
-void DibujarMediaTierra(int x, int y)
+void DibujarMediaTierra(int x, int y) //Christian
 {
     ColorVerde();
     Posicion(x, y);    cout << "..._";
@@ -389,7 +393,7 @@ void AsteroidesMov() {  //IMPORTANTE
     if (ay7 >= 25) { BorrarAsteroide(ayx + ayx2 * 6, ay7); ay7 = 0; av7 = rand() % 4 + veloA; at7 = 0; }    //rand() % 4, número aleatorio entre el 0 y el 3
     if (ay8 >= 25) { BorrarAsteroide(ayx + ayx2 * 7, ay8); ay8 = 0; av8 = rand() % 4 + veloA; at8 = 0; }
 
-    if (at1 >= av1) { BorrarAsteroide(ayx, ay1);            ay1++; DibujarAsteroide(ayx, ay1);            at1=0; }  //esta locura
+    if (at1 >= av1) { BorrarAsteroide(ayx, ay1);            ay1++; DibujarAsteroide(ayx, ay1);            at1=0; }  //Condicion para que el asteroide avance, no es velocidad, es el tiempo que tiene que esperar para que avance una casitlla
     if (at2 >= av2) { BorrarAsteroide(ayx + ayx2, ay2);     ay2++; DibujarAsteroide(ayx + ayx2, ay2);     at2=0; }
     if (at3 >= av3) { BorrarAsteroide(ayx + ayx2 * 2, ay3); ay3++; DibujarAsteroide(ayx + ayx2 * 2, ay3); at3=0; }
     if (at4 >= av4) { BorrarAsteroide(ayx + ayx2 * 3, ay4); ay4++; DibujarAsteroide(ayx + ayx2 * 3, ay4); at4=0; }
